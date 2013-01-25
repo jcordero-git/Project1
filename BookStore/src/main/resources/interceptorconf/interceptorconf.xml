@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="
+                http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                http://www.springframework.org/schema/context
+                http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<!-- <bean id="bookServiceProxy" class="org.springframework.aop.framework.ProxyFactoryBean"> 
+		<property name="target" ref="bookService" /> <property name="interceptorNames"> 
+		<list> <value>bookServiceInterceptor</value> </list> </property> </bean> -->
+
+	<bean id="loggerProxy"
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<list>
+				<value>*DAO</value>
+				<value>*Service</value>
+			</list>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>logInterceptor</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- <bean id="bookAdvisor" class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor"> 
+		<property name="mappedName" value="insert" /> <property name="advice" ref="bookServiceInterceptor" 
+		/> </bean> <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator"> 
+		<property name="beanNames"> <list> <value>*Service</value> </list> </property> 
+		<property name="interceptorNames"> <list> <value>bookAdvisor</value> </list> 
+		</property> </bean> -->
+
+
+</beans>
